@@ -124,12 +124,15 @@
 </head>
 <body>
 <div class="everything">
-    <ul>
-        <h1>To do list</h1>
-        <% newItem.forEach(function(item){ %>
-            <li><%= item %> <i class="fa-solid fa-check"></i></li>
-          <% }); %>
-    </ul>
+    <h1>To do list</h1>
+    <ul id="itemList">
+        <% Object.entries(newItem).forEach(function([key, value], index) { %>
+            <li data-index="<%= index %>"><%= key %>: <%= value %> <i class="fa-solid fa-check"></i></li>
+          <% }); %> 
+      </ul>
+    <!-- <ul>
+       
+    </ul> -->
 </div>
 <div class="button-div">
     <button class="btn-add mb-4" onclick="show()">Add New Task</button>
@@ -154,6 +157,34 @@
             document.querySelector('.form').style.display = 'none';
             document.querySelector('.overlay').style.display = 'none';
         }
+        
+
+        $(document).ready(function () {
+            $('#itemList').on('click', 'li i', function () {
+                var liElement = $(this).closest('li');
+                var index = liElement.data('index');
+                console.log(JSON.stringify({index: index}));
+
+                // Send a request to the server to remove the item
+                $.ajax({
+                    url: '/removeItem',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ index: index }),
+                    success: function (data) {
+                        // If the server responds successfully, remove the entire li element from the UI
+                        if (data.success) {
+                            liElement.remove();
+                        } else {
+                            console.error('Failed to remove item from the server.');
+                        }
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+        });
     </script>
     
 </div>
