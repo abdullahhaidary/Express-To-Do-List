@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To DO List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body{
+            margin:0;
+            /* background-color: rgb(21, 21, 20); */
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .everything{
+            width: 100%;
+            height: 100vh;
+            padding-bottom:80px;
+            display: flex;
+            justify-content: center;
+        }
+        ul {
+            list-style-type: none;
+            display:flex;
+            gap:20px;
+            width:900px;
+            flex-direction: column;
+            margin: 0;
+            padding: 50px 50px;
+            overflow-y: auto;
+            background-color: white;
+        }
+        ul li{
+            cursor:pointer;
+            display:flex;
+            justify-content: space-between;
+            padding:2vh 3vh 2vh 3vh;
+            border-radius: 3px;
+            box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+            background-color:blanchedalmond;
+            opacity:0.8;
+        }
+        ul li:hover{
+            box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+            opacity:1;
+        }
+        ul li i{
+            font-size:20px;
+            color:white;
+            padding:1vh 2vh;
+            background-color:rgb(59, 174, 28);
+            opacity: 0.8;
+        }
+        ul li i:hover{
+            opacity: 1;
+        }
+        ul h1{
+            text-align: center;
+        }
+        .button-div{
+            display:flex;
+            justify-content: center;
+        }
+        .button-div button{
+            background-color: blue !important;
+            color:white;
+            padding:1vh 1vh 1vh 1vh ;
+            border:0;
+            position:absolute;
+            margin:auto;
+            bottom:0;
+        }
+        .form{
+            position:absolute;
+            top:50%;
+            left:50%;
+            transform: translate(-50%, -50%);
+            width:50%;
+            height:40vh;
+            display:flex;
+            padding:20px;
+            background-color: white;
+            box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+            border-radius: 3px;
+            opacity:0.8;
+            display:none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            box-sizing: border-box;
+            z-index: 10;
+            transition: all 0.5s ease;
+
+        }
+        .form i{
+            position:absolute;
+            font-size:15pt;
+            color:red;
+            cursor:pointer;
+            padding:1vh 1vh 1vh 1vh;
+            top:0;
+            right:0;
+            margin:20px 20px 0 0 ;
+        }
+        .form i:hover{
+            background-color:blanchedalmond;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.7); /* Adjust the alpha (last value) for transparency */
+            backdrop-filter: blur(5px); /* Adjust the blur amount */
+            z-index: 2;
+            display: none;
+        }
+    </style>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <script src="js/jquery.js"></script>
+</head>
+<body>
+<div class="everything">
+    <ul>
+        <h1>To do list</h1>
+        <% newItem.forEach(function(item){ %>
+            <li><%= item %> <i class="fa-solid fa-check"></i></li>
+          <% }); %>
+    </ul>
+</div>
+<div class="button-div">
+    <button class="btn-add mb-4" onclick="show()">Add New Task</button>
+</div>
+<div class="overlay" onclick="hide()"></div>
+<div class="form">
+    <i class="fa fa-times" onclick="hide()"></i>
+    <h1 class="text-center">Add New Task</h1>
+    <form action="/" method="post" class="mt-5">
+        <input autofocus type="text" name="newItem">
+        <button id="formButton" class="btn btn-primary" type="submit">Add</button>
+    </form>
+   
+    <script>
+        function show(){
+            document.querySelector('.form').style.display = 'block';
+            document.querySelector('.overlay').style.display = 'block';
+            var inputElement = document.querySelector('.form form input');
+            inputElement.focus();
+        }
+        function hide() {
+            document.querySelector('.form').style.display = 'none';
+            document.querySelector('.overlay').style.display = 'none';
+        }
+    </script>
+    
+</div>
+</body>
+</html>
